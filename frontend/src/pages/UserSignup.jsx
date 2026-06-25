@@ -14,14 +14,14 @@ const UserSignup=()=>
     {
         e.preventDefault();
         setUserData({
-            username:
+            fullname:
             {firstName: firstName,
             lastName: lastName,
             },
             email: email,
             password: password
         });
-        
+        console.log(userData);
     setEmail('');{/*this is used to clear the value of email input field*/}
     setFirstName('');{/*this is used to clear the value of first name input field*/}
     setLastName('');{/*this is used to clear the value of last name input field*/}
