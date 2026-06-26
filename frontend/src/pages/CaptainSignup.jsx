@@ -30,13 +30,13 @@ const submitHandler = async (e) => {
       }
     }
     setEmail('');{/*this is used to clear the value of email input field*/}
-    setFirstName('');
-    setLastName('');
-    setPassword('');
-    setVehicleColor('');
-    setVehiclePlate('');
-    setVehicleCapacity('');
-    setVehicleType('');
+    setFirstName('');{/*this is used to clear the value of firstName input field*/}
+    setLastName('');{/*this is used to clear the value of lastName input field*/}
+    setPassword('');{/*this is used to clear the value of password input field*/}
+    setVehicleColor('');{/*this is used to clear the value of vehicleColor input field*/}
+    setVehiclePlate('');{/*this is used to clear the value of vehiclePlate input field*/}
+    setVehicleCapacity('');{/*this is used to clear the value of vehicleCapacity input field*/}
+    setVehicleType('');{/*this is used to clear the value of vehicleType input field*/}
     console.log(captainData);
   }
 
