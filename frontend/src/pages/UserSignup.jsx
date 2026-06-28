@@ -1,6 +1,9 @@
 import React from 'react'
-import {useState} from 'react'
-import { Link } from 'react-router-dom'
+import {useState,useContext} from 'react'
+import { Link,useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import { UserDataContext } from '../context/UserContext.jsx'
+
 
 
 const UserSignup=()=>
@@ -10,18 +13,33 @@ const UserSignup=()=>
     const [firstName,setFirstName]=useState('');
     const [lastName,setLastName]=useState('');
     const [userData,setUserData]=useState({});
-    const submitHandler=(e)=>
+    
+       const navigate =useNavigate()
+
+       
+        const { user, setUser } = useContext(UserDataContext)
+
+
+    const submitHandler=async(e)=>
     {
         e.preventDefault();
-        setUserData({
+        const newUser={
             fullname:
-            {firstName: firstName,
-            lastName: lastName,
+            {firstname: firstName,
+            lastname: lastName,
             },
             email: email,
             password: password
-        });
-        console.log(userData);
+        };
+        const response= await axios.post('http://localhost:4000/users/register',newUser)
+
+        if(response.status===201)
+        {
+            const data=response.data;
+            setUser(data.user);
+            console.log(newUser);
+            navigate('/home');
+        }
     setEmail('');{/*this is used to clear the value of email input field*/}
     setFirstName('');{/*this is used to clear the value of first name input field*/}
     setLastName('');{/*this is used to clear the value of last name input field*/}
