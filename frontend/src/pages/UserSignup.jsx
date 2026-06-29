@@ -38,6 +38,8 @@ const UserSignup=()=>
             const data=response.data;
             setUser(data.user);
             console.log(newUser);
+            localStorage.setItem('token',data.token);{/*this is used to store the value of token data in the local storage so that it can be accessed even after the page is refreshed*/}
+           
             navigate('/home');
         }
     setEmail('');{/*this is used to clear the value of email input field*/}

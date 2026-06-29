@@ -1,19 +1,35 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { useState } from 'react'
+import { useState,useContext } from 'react'
+import { UserDataContext } from '../context/UserContext.jsx'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 const Userlogin=()=>
 {
     const[email,setEmail]=useState('');{/*this is used to store the value of email input field and setEmail is used to update the value of email input field*/}
     const[password,setPassword]=useState('');{/*this is used to store the value of password input field and setPassword is used to update the value of password input field*/}
     const[userData,setUserData]=useState({});{/*this is used to store the value of user data and setUserData is used to update the value of user data*/}
-    const submitHandler=(e)=>
+
+    const {user,setUser}=useContext(UserDataContext);{/*this is used to get the value of user data from the context and setUser is used to update the value of user data in the context*/}
+    const navigate=useNavigate();{/*this is used to navigate to different routes*/}
+
+    const submitHandler=async (e)=>
     {
         e.preventDefault();{/*this is used to prevent the default behavior of the form which is to reload the page*/}
-         setUserData({
+         const userData={
             email: email,
-             password: password});{/*this is used to update the value of user data with the value of email and password input fields*/}
+             password: password};{/*this is used to update the value of user data with the value of email and password input fields*/}
         console.log(userData);{/*this is used to log the value of user data*/}
+
+        const response= await axios.post('http://localhost:4000/users/login',userData);{/*this is used to send a post request to the server with the value of user data*/}
+        if(response.status===200)
+        {
+            const data=response.data;{/*this is used to get the value of response data*/}
+            setUser(data.user);{/*this is used to update the value of user data in the context with the value of response data*/}
+            localStorage.setItem('token',data.token);{/*this is used to store the value of token data in the local storage so that it can be accessed even after the page is refreshed*/}
+            navigate('/home');{/*this is used to navigate to the home page*/}
+        }
         setEmail('');{/*this is used to clear the value of email input field*/}
         setPassword('');{/*this is used to clear the value of password input field*/}
     }
