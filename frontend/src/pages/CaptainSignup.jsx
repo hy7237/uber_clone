@@ -119,14 +119,37 @@ const submitHandler = async (e) => {
                         onChange={(e) => {setVehiclePlate(e.target.value)}}
                         />
                         </div>
+                        <div className='flex gap-4 mb-7'>
+                            <input
+                            required
+                            className='bg-[#eeeeee] w-1/2 rounded-lg px-4 py-2 border text-lg placeholder:text-base'
+                            type="number"
+                            placeholder='Vehicle Capacity'
+                            value={vehicleCapacity>0?vehicleCapacity:''}
+                            onChange={(e) => {setVehicleCapacity(e.target.value)}}
+                            />
+                            <select
+                            required
+                            className='bg-[#eeeeee] w-1/2 rounded-lg px-4 py-2 border text-lg placeholder:text-base'
+                            value={vehicleType}
+                            onChange={(e) => {setVehicleType(e.target.value)}}
+                            >
+                                <option value="" disabled>Select Vehicle Type</option>
+                                <option value="car">Car</option>
+                                <option value="bike">Bike</option>
+                                <option value="van">Auto</option>
+                                <option value="truck">Van</option>
+                            </select>
+                        </div>
                         <button
                             className='bg-[#111] text-white font-semibold mb-3 rounded-lg px-4 py-2 w-full text-lg placeholder:text-base'
-                        >Create Account</button>
+                        >Create Captain Account</button>
 
                     </form>
                     <p className='text-center'>Already have an account? <Link to='/captain-login' className='text-blue-600'>Login here</Link></p>
                 </div>
             </div>
+            
     )
 }
 
