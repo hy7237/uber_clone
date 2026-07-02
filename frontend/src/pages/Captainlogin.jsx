@@ -1,18 +1,36 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import {CaptainDataContext} from '../context/CaptainContext.jsx'
+import { useContext } from 'react'
 
-const Home=()=>
+const captainlogin=()=>
 {
  const [email,setEmail]=useState('');{/*this is used to store the value of email input field and setEmail is used to update the value of email input field*/}
  const [password,setPassword]=useState('');{/*this is used to store the value of password input field and setPassword is used to update the value of password input field*/}
- const [captainData,setcaptainData]=useState({});{/*this is used to store the value of user data and setUserData is used to update the value of user data*/}
- const submitHandler=(e)=>
+ const {captain,setCaptain}=useContext(CaptainDataContext);
+
+ const navigate=useNavigate();{/*this is used to navigate to different pages in the application*/}
+ const submitHandler=async (e)=>
  {
     e.preventDefault();{/*this is used to prevent the default behavior of the form which is to reload the page*/}
-    setcaptainData({
+    const captain={
         email: email,
-        password: password});{/*this is used to update the value of user data with the value of email and password input fields*/}
+        password: password};{/*this is used to update the value of user data with the value of email and password input fields*/}
+
+        const response=await axios.post('http://localhost:4000/captains/login',captain);{/*this is used to send a post request to the server with the value of user data*/}
+
+
+        if(response.status===200)
+        {
+            const data=response.data;
+            setCaptain(data.captain);{/*this is used to update the value of user data with the value of user data received from the server*/}
+            localStorage.setItem('token',data.token);{/*this is used to store the value of token data in the local storage so that it can be accessed even after the page is refreshed*/}
+            navigate('/captain-home');{/*this is used to navigate to the home page after successful login*/}
+        }
+
         setEmail('');{/*this is used to clear the value of email input field*/}
         setPassword('');{/*this is used to clear the value of password input field*/}
  }
@@ -65,4 +83,4 @@ const Home=()=>
     )
 }
 
-export default Home;
+export default captainlogin;

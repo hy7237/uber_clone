@@ -37,6 +37,14 @@ const submitHandler = async (e) => {
         vehicleType: vehicleType
       }
     }
+    const response = await axios.post('http://localhost:4000/captains/register',captainData);
+    if(response.status === 201) {
+      const data = response.data;
+      console.log(data);
+      setCaptain(data.captain);
+      localStorage.setItem('token', data.token);
+      navigate('/captain-home');
+    }
     setEmail('');{/*this is used to clear the value of email input field*/}
     setFirstName('');{/*this is used to clear the value of firstName input field*/}
     setLastName('');{/*this is used to clear the value of lastName input field*/}
@@ -134,11 +142,11 @@ const submitHandler = async (e) => {
                             value={vehicleType}
                             onChange={(e) => {setVehicleType(e.target.value)}}
                             >
-                                <option value="" disabled>Select Vehicle Type</option>
-                                <option value="car">Car</option>
-                                <option value="bike">Bike</option>
-                                <option value="van">Auto</option>
-                                <option value="truck">Van</option>
+                                  <option value="" disabled>Select Vehicle Type</option>
+                                 <option value="car">Car</option>
+                                 <option value="motorcycle">moto</option>
+                                 <option value="auto">Auto</option>
+                                  
                             </select>
                         </div>
                         <button
