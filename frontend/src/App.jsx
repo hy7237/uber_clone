@@ -10,6 +10,7 @@ import UserProtectWrapper from './pages/UserProtectWrapper.jsx';
 import UserLogout from './pages/UserLogout.jsx'
 import CaptainHome from './pages/CaptainHome.jsx';
 import CaptainProtectWrapper from './pages/CaptainProtectWrapper.jsx';
+import Riding from './pages/Riding.jsx'
 
 
 const App=()=>
@@ -20,6 +21,7 @@ const App=()=>
             <Routes>
                 <Route path='/' element={<Start/>}/>
                 <Route path='/login' element={<Userlogin/>}/>
+                <Route path='/riding' element={<Riding/>}/>
                  <Route path='/signup' element={<UserSignup/>}/>
                 <Route path='/captain-login' element={<Captainlogin/>}/>
                  <Route path='/captain-signup' element={<CaptainSignup/>}/>

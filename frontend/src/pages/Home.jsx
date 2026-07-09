@@ -7,6 +7,9 @@ import 'remixicon/fonts/remixicon.css'
 import LocationSearchPanel from '../components/LocationSearchPanel';
 import VehiclePanel from '../components/VehiclePanel';
 import ConfirmRide from '../components/ConfirmRide';
+import LookingForDriver from '../components/LookingForDriver';
+import WaitingForDriver from '../components/WaitingForDriver';
+
 
 
 
@@ -18,8 +21,14 @@ const Home = () => {
     const confirmRidePanelRef=useRef(null)//this is used to get the reference of the panel so that it can be animated using gsap
     const panelRef = useRef(null)//this is used to get the reference of the panel so that it can be animated using gsap
     const panelCloseRef = useRef(null)
+    const vehicleFoundRef=useRef(null)
+    const waitingForDriverRef=useRef(null)
     const [vehiclePanel,setVehiclePanel]=useState(false);
     const [confirmRidePanel,setConfirmRidePanel]=useState(false);
+    const [vehicleFound,setVehicleFound]=useState(false);
+    const [waitingForDriver,setWaitingForDriver]=useState(false);
+    
+
 
 
 
@@ -85,6 +94,38 @@ const Home = () => {
            
     },[confirmRidePanel])
 
+     useGSAP(function() {
+        if(vehicleFound)
+        {
+           gsap.to(vehicleFoundRef.current, {
+            transform:'translateY(0)'
+           })
+        }
+        else
+        {
+             gsap.to(vehicleFoundRef.current, {
+            transform:'translateY(100%)'
+           })
+        }
+           
+    },[vehicleFound])
+
+     useGSAP(function() {
+        if(waitingForDriver)
+        {
+           gsap.to(waitingForDriverRef.current, {
+            transform:'translateY(0)'
+           })
+        }
+        else
+        {
+             gsap.to(waitingForDriverRef.current, {
+            transform:'translateY(100%)'
+           })
+        }
+           
+    },[waitingForDriver])
+
 
 
 
@@ -135,7 +176,13 @@ const Home = () => {
                <VehiclePanel setConfirmRidePanel={setConfirmRidePanel} setVehiclePanel={setVehiclePanel}/>
            </div>
             <div ref={confirmRidePanelRef} className='fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-10 pt-12'>
-               <ConfirmRide/>
+               <ConfirmRide setConfirmRidePanel={setConfirmRidePanel} setVehicleFound={setVehicleFound}/>
+           </div>
+             <div ref={vehicleFoundRef} className='fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-10 pt-12'>
+                <LookingForDriver setVehicleFound={setVehicleFound}/>
+           </div>
+           <div ref={waitingForDriverRef} className='fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-10 pt-12'>
+                <WaitingForDriver setWaitingForDriver={setWaitingForDriver}/> {/*but in the code section passed waitingfordriver not setwaitingfor driver check it in future*/}
            </div>
         </div>
 
