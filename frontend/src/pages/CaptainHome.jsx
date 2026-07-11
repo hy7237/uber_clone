@@ -1,7 +1,30 @@
 import React from 'react'
+import {useState,useRef} from 'react'
 import { Link } from 'react-router-dom'
+import CaptainDetails from '../components/CaptainDetails'
+import RidePopup from '../components/RidePopup'
+import {useGSAP} from '@gsap/react';
+import gsap from 'gsap';
 
 const CaptainHome = () => {
+    const [ridePopupPanel,setRidePopupPanel]=useState(true);
+    const ridePopupPanelRef=useRef(null);
+      useGSAP(function() {
+        if(ridePopupPanel)
+        {
+           gsap.to(ridePopupPanelRef.current, {
+            transform:'translateY(0)'
+           })
+        }
+        else
+        {
+             gsap.to(ridePopupPanelRef.current, {
+            transform:'translateY(100%)'
+           })
+        }
+           
+    },[ridePopupPanel])
+
     return (
       <div className='h-screen'>
                  <div className='fixed p-6 top-0 flex items-center justify-between w-screen'>
@@ -10,37 +33,14 @@ const CaptainHome = () => {
                       <i className="text-lg font-medium ri-logout-box-r-line"></i>
                   </Link>
                  </div>
-                  <div className='h-1/2'>
+                  <div className='h-3/5'>
                    <img className='h-full w-full object-cover' src="https://acumengpstrack.com/wp-content/uploads/2020/10/41LXSSqXB5L.jpg" alt=""/>
                 </div>
-                <div className='h-1/2 p-4'>
-                       <div>
-                        <div>
-                            <img src="" alt="" />
-                            <h4>Himanshu Yadav</h4>
-                        </div>
-                        <div>
-                            <h4>Rs 2312.20</h4>
-                            <p>Earned</p>
-                        </div>
-                       </div>
-                       <div>
-                        <div className='text-center'>
-                            <i className="text-2xl font-thin ri-time-line"></i>
-                            <h5 className='text-lg font-medium'>10.3</h5>
-                            <p className='text-sm text-gray-600'>Hours Online</p>
-                        </div>
-                        <div className='text-center'>
-                            <i className="text-2xl font-thin ri-speed-up-fill"></i>
-                             <h5 className='text-lg font-medium'>10.3</h5>
-                            <p className='text-sm text-gray-600'>Hours Online</p>
-                        </div>
-                        <div className='text-center'>
-                            <i className="text-2xl font-thin ri-booklet-line"></i>
-                             <h5 className='text-lg font-medium'>10.3</h5>
-                            <p className='text-sm text-gray-600'>Hours Online</p>
-                        </div>
-                       </div>
+                <div className='h-2/5 p-4'>
+                       <CaptainDetails />
+                 </div>
+                <div ref={ridePopupPanelRef} className='fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-10 pt-12'>
+                          <RidePopup setRidePopupPanel={setRidePopupPanel}/>
                  </div>
            </div>
     )
