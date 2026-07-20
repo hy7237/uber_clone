@@ -64,7 +64,7 @@ const captainSchema=new mongoose.Schema({
         {
             type:String,
             required:true,
-            enum:['car','bike','auto'],//enum is datatype used to store fixed set of named values
+            enum: [ 'car', 'motorcycle', 'auto' ]//enum is datatype used to store fixed set of named values
         }
     },
     location:
