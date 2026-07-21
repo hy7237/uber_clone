@@ -37,14 +37,15 @@ module.exports.getDistanceTime=async(origin,destination)=>
 
     const url = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${encodeURIComponent(origin)}&destinations=${encodeURIComponent(destination)}&key=${apiKey}`;
     try{
-        const response=await axios.get(url);
+        const response=await axios.get(url)
         if(response.data.status==='OK')
         {
             if(response.data.rows[0].elements[0].status==='ZERO_RESULTS')
             {
                 throw new Error('No routes found');
             }
-            return response.data.rows[0].elements[0];
+            // return response.data.rows[0].elements[0];
+            return [];
         }
         else
         {
@@ -85,5 +86,5 @@ module.exports.getAutoCompleteSuggestions=async(input)=>
         console.error(err);
         throw err;
     }
-
+   
 }
