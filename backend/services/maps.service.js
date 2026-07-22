@@ -45,7 +45,7 @@ module.exports.getDistanceTime=async(origin,destination)=>
                 throw new Error('No routes found');
             }
             // return response.data.rows[0].elements[0];
-            return [];
+              return response.data.rows[0].elements[0];
         }
         else
         {
