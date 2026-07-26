@@ -8,7 +8,7 @@ const FinishRide=(props)=>
                  <h5 className='p-1 text-center w-[93%] absolute top-0' onClick={() => {
                      props.setFinishRidePanel(false);
                   }}><i className="text-3xl text-gray-200 ri-arrow-down-wide-line"></i></h5>
-                  <h3 className='text-2xl font-semibold mb-5'>Finish this Ride-Reaching towards your destination</h3>
+                  <h3 className='text-2xl font-semibold mb-5'>Finish this Ride-At your destination</h3>
                    <div className='flex items-center justify-between p-3 bg-yellow-400 rounded-full mt-4'>
                       <div className='flex items-center gap-3 '>
                           <img className='h-12 w-12 rounded-full object-cover ' src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRa00T62AWj3L0URW2KRoWJNL8Iv4etgmrcuT1r3ADVPg&s'alt=""/>
@@ -43,7 +43,7 @@ const FinishRide=(props)=>
                       <div className='mt-6 w-full'>
                         
                            <Link to='/captain-home' className='w-full flex text-lg mt-5 flex justify-center bg-green-600 text-white font-semibold p-2 rounded-lg'>Finish Ride</Link>
-      
+              
                         
                       </div>
                        
