@@ -13,11 +13,11 @@ router.post('/create',
 
 )
 
-/*router.post('/get-fare',
+router.get('/get-fare',
     authMiddleware.authUser,
     query('pickup').isString().isLength({min:3}).withMessage('Invalid Pickup Address'),
     query('destination').isString().isLength({min:3}).withMessage('Invalid Destination Address'),
     rideController.getFare
-)*/
+)
 
 module.exports=router;
