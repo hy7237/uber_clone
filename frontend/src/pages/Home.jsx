@@ -31,8 +31,10 @@ const Home = () => {
     const [vehicleFound,setVehicleFound]=useState(false);
     const [waitingForDriver,setWaitingForDriver]=useState(false);
     const [ activeField, setActiveField ] = useState(null)
+    const [fare,setFare]=useState({})
     
-
+   //does the child only need to read the state than pass only the value like fare={fare}
+   //does the child need to modify the state than pass the setter too
 
 
 
@@ -178,6 +180,16 @@ const Home = () => {
          setVehiclePanel(true)
         setPanelOpen(false)
 
+        const response=await axios.get(`${import.meta.env.VITE_BASE_URL}/rides/get-fare`,{
+            params:{pickup,destination},
+            headers:
+            {
+                Authorization:`Bearer ${localStorage.getItem('token')}`
+            }
+        })
+
+        setFare(response.data)
+
     }
 
 
@@ -236,7 +248,7 @@ const Home = () => {
             </div>
            </div>
            <div ref={vehiclePanelRef} className='fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-10 pt-12'>
-               <VehiclePanel setConfirmRidePanel={setConfirmRidePanel} setVehiclePanel={setVehiclePanel}/>
+               <VehiclePanel fare={fare} setConfirmRidePanel={setConfirmRidePanel} setVehiclePanel={setVehiclePanel}/>
            </div>
             <div ref={confirmRidePanelRef} className='fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-10 pt-12'>
                <ConfirmRide setConfirmRidePanel={setConfirmRidePanel} setVehicleFound={setVehicleFound}/>
