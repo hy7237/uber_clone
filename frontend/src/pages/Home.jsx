@@ -32,6 +32,7 @@ const Home = () => {
     const [waitingForDriver,setWaitingForDriver]=useState(false);
     const [ activeField, setActiveField ] = useState(null)
     const [fare,setFare]=useState({})
+    const [ vehicleType, setVehicleType ] = useState(null)
     
    //does the child only need to read the state than pass only the value like fare={fare}
    //does the child need to modify the state than pass the setter too
@@ -192,6 +193,23 @@ const Home = () => {
 
     }
 
+    async function createRide()
+    {
+        const response=await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/create`,
+            {
+                pickup,
+                destination,
+                vehicleType
+            },
+            {
+                headers:
+                {
+                    Authorization:`Bearer ${localStorage.getItem('token')}`
+                }
+            }
+        )
+    }
+
 
 
 
@@ -248,13 +266,19 @@ const Home = () => {
             </div>
            </div>
            <div ref={vehiclePanelRef} className='fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-10 pt-12'>
-               <VehiclePanel fare={fare} setConfirmRidePanel={setConfirmRidePanel} setVehiclePanel={setVehiclePanel}/>
+               <VehiclePanel selectVehicle={setVehicleType} fare={fare} setConfirmRidePanel={setConfirmRidePanel} setVehiclePanel={setVehiclePanel}/>
            </div>
             <div ref={confirmRidePanelRef} className='fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-10 pt-12'>
-               <ConfirmRide setConfirmRidePanel={setConfirmRidePanel} setVehicleFound={setVehicleFound}/>
+               <ConfirmRide createRide={createRide} pickup={pickup} destination={destination} fare={fare} vehicleType={vehicleType} setConfirmRidePanel={setConfirmRidePanel} setVehicleFound={setVehicleFound}/>
            </div>
              <div ref={vehicleFoundRef} className='fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-10 pt-12'>
-                <LookingForDriver setVehicleFound={setVehicleFound}/>
+                <LookingForDriver 
+                  createRide={createRide}
+                    pickup={pickup}
+                    destination={destination}
+                    fare={fare}
+                    vehicleType={vehicleType}
+                setVehicleFound={setVehicleFound}/>
            </div>
            <div ref={waitingForDriverRef} className='fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-10 pt-12'>
                 <WaitingForDriver setWaitingForDriver={setWaitingForDriver}/> {/*but in the code section passed waitingfordriver not setwaitingfor driver check it in future*/}
