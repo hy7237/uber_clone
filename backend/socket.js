@@ -1,8 +1,8 @@
-const socketIo=require('socket.io');
+const socketIo=require('socket.io');//importing socket.io library for real-time communication
 const userModel=require('./models/user.model');
 const captainModel=require('./models/captain.model');
 
-let io;
+let io;//here io is variable that will store the lot of information about the socket connection and will be used to send messages to specific clients based on their socket ID. It is initialized in the initializeSocket function when the server is created and will be used throughout the application to manage real-time communication between clients and the server.
 
 
 
@@ -15,7 +15,7 @@ function initializeSocket(server)
         methods:['GET','POST']
     }
    });
-   io.on('connetion',(socket)=>
+   io.on('connection',(socket)=>
 {
     console.log(`Client connected:${socket.id}`);
 
@@ -28,7 +28,7 @@ function initializeSocket(server)
         }
         else if(userType==='captain')
         {
-            await userModel.findByIdAndUpdate(userId,{socketId:socket.id});
+            await captainModel.findByIdAndUpdate(userId,{socketId:socket.id});
         }
     });
     socket.on('update-location-captain',async(data)=>
@@ -50,7 +50,7 @@ function initializeSocket(server)
     });
     socket.on('disconnect',()=>
     {
-        console.log(`Clinet connected:${socket.id}`);
+        console.log(`Client disconnected:${socket.id}`);
     });
 });
 }
