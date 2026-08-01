@@ -1,6 +1,7 @@
 import React from 'react';
 import {useState} from 'react';
 import {useRef} from 'react';
+import {useEffect} from 'react';
 import {useGSAP} from '@gsap/react';
 import gsap from 'gsap';
 import axios from 'axios';
@@ -10,6 +11,9 @@ import VehiclePanel from '../components/VehiclePanel';
 import ConfirmRide from '../components/ConfirmRide';
 import LookingForDriver from '../components/LookingForDriver';
 import WaitingForDriver from '../components/WaitingForDriver';
+import {useContext } from 'react';
+import {SocketContext } from '../context/SocketContext';
+import {UserDataContext} from '../context/UserContext';
 
 
 
@@ -37,9 +41,13 @@ const Home = () => {
    //does the child only need to read the state than pass only the value like fare={fare}
    //does the child need to modify the state than pass the setter too
 
+  const socket=useContext(SocketContext)
+  const {user}=useContext(UserDataContext)
 
-
-
+     useEffect(() => {
+        socket.emit("join", { userType: "user", userId: user._id })
+    }, [ user ])
+    
     const submitHandler=(e)=>
     {
         e.preventDefault();
