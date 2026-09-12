@@ -20,11 +20,12 @@ const CaptainHome = () => {
     const socket=useContext(SocketContext)
     const {captain}=useContext(CaptainDataContext)
 
-    useEffect(() => {
-        socket.emit("join", { userType: "captain", userId: captain._id })
-    }, [ captain ])
-
-      const updateLocation = () => {
+      useEffect(() => {
+        socket.emit('join', {
+            userId: captain._id,
+            userType: 'captain'
+        })
+        const updateLocation = () => {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(position => {
 
@@ -38,6 +39,19 @@ const CaptainHome = () => {
                 })
             }
         }
+
+        const locationInterval = setInterval(updateLocation, 10000)
+        updateLocation()
+
+        // return () => clearInterval(locationInterval)
+    }, [])
+
+       socket.on('new-ride', (data) => {
+
+        setRide(data)
+        //setRidePopupPanel(true)
+
+    })
 
       useGSAP(function() {
         if(ridePopupPanel)
